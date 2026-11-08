@@ -29,7 +29,7 @@ Para agregar cualquier nueva configuración o perfil en el futuro:
    mkdir -p profiles/mi-nuevo-entorno
    ```
 
-2. Agrega el archivo `profiles/mi-nuevo-entorno/profile.yml`:
+2. Agrega el archivo `profiles/mi-nuevo-entorno/profile.yml` (y cualquier script `.sh` referenciado en la misma carpeta):
    ```yaml
    id: mi-nuevo-entorno
    label: "Node.js + Python + Herramientas"
@@ -39,10 +39,8 @@ Para agregar cualquier nueva configuración o perfil en el futuro:
      - pnpm
      - python
    scripts:
-     - name: "custom-setup"
+     - file: custom-setup.sh
        when: start
-       run: |
-         echo "Configurando entorno..."
    ```
 
 3. Haz `git commit` y `git push`. El pipeline detectará la nueva imagen en una matriz paralela y la publicará automáticamente en GHCR.

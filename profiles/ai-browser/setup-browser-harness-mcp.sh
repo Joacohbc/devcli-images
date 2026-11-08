@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# 1. Instalar browser-harness con uv
+uv tool install --python 3.12 --upgrade browser-harness
+browser-harness telemetry disable 2>/dev/null || true
+
+WORKSPACE_DIR="${WORKSPACE:-/workspaces}"
+
+# 2. Configuración MCP para Claude (.claude/mcp.json)
+mkdir -p "${WORKSPACE_DIR}/.claude"
+cat << 'EOF' > "${WORKSPACE_DIR}/.claude/mcp.json"
+{
+  "mcpServers": {
+    "browser-harness": {
+      "command": "uvx",
+      "args": ["--from", "browser-harness[mcp]", "browser-harness-mcp"]
+    }
+  }
+}
+EOF
+
+# 3. Configuración MCP para Antigravity (.agent/mcp.json)
+mkdir -p "${WORKSPACE_DIR}/.agent"
+cat << 'EOF' > "${WORKSPACE_DIR}/.agent/mcp.json"
+{
+  "mcpServers": {
+    "browser-harness": {
+      "command": "uvx",
+      "args": ["--from", "browser-harness[mcp]", "browser-harness-mcp"]
+    }
+  }
+}
+EOF
+
+# 4. Configuración MCP para Cursor (.cursor/mcp.json)
+mkdir -p "${WORKSPACE_DIR}/.cursor"
+cat << 'EOF' > "${WORKSPACE_DIR}/.cursor/mcp.json"
+{
+  "mcpServers": {
+    "browser-harness": {
+      "type": "stdio",
+      "command": "uvx",
+      "args": ["--from", "browser-harness[mcp]", "browser-harness-mcp"]
+    }
+  }
+}
+EOF
