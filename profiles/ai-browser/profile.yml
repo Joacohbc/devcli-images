@@ -2,6 +2,8 @@ id: ai-browser
 label: "Python + Chromium + Browser Harness MCP"
 modules:
   - github-cli
+  - nodejs
+  - pnpm
   - python
   - chrome
 scripts:
