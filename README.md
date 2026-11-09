@@ -1,66 +1,47 @@
 # devcli-images
 
-Repositorio de pipelines para compilar y publicar imágenes de devcontainers personalizadas en **GitHub Packages (GHCR)** utilizando `devcontainer-cli`.
+Imágenes de devcontainers personalizadas precompiladas para usar directamente con `devcontainer-cli`.
 
 ---
 
-## 🚀 ¿Cómo funciona?
+## ⚡ Uso rápido con `devcontainer-cli`
 
-1. **Definición de Perfiles**:
-   Cada imagen personalizada se define dentro del directorio `profiles/`.
-   - Puede ser un directorio `profiles/<id>/profile.yml` (recomendado si lleva scripts o archivos auxiliares).
-   - O un archivo simple `profiles/<id>.yml`.
+Para iniciar un devcontainer usando directamente una de estas imágenes sin compilar localmente:
 
-2. **Pipeline automatizado (`.github/workflows/build-images.yml`)**:
-   - Detecta automáticamente todos los perfiles en `profiles/`.
-   - Descarga la última versión de `devcontainer-cli` desde `Joacohbc/my-devcontainer-installer`.
-   - Genera el `Dockerfile` optimizado y el contexto de build en modo headless (`--no-interactive --no-build`).
-   - Compila la imagen multi-arquitectura (`linux/amd64` y `linux/arm64`) utilizando Docker Buildx.
-   - Publica la imagen en GitHub Packages (`ghcr.io/<owner>/<profile>:latest` y tag por SHA).
+```bash
+# Iniciar contenedor con la imagen precompilada
+devcontainer-cli up --image ghcr.io/joacohbc/ai-browser:latest
+```
+
+O para inicializar la configuración en tu proyecto actual:
+
+```bash
+devcontainer-cli init --image ghcr.io/joacohbc/ai-browser:latest
+```
 
 ---
 
-## 📦 Agregar un nuevo perfil / imagen
+## 📦 Imágenes disponibles
 
-Para agregar cualquier nueva configuración o perfil en el futuro:
+| Imagen | Contenido |
+|---|---|
+| `ghcr.io/joacohbc/ai-browser:latest` | Python, uv, Node.js, pnpm, Chromium headless, GitHub CLI y Browser Harness con MCP preconfigurado (.claude, .agent, .cursor). |
 
-1. Crea una carpeta dentro de `profiles/` con el identificador deseado:
-   ```bash
-   mkdir -p profiles/mi-nuevo-entorno
-   ```
+---
 
-2. Agrega el archivo `profiles/mi-nuevo-entorno/profile.yml` (y cualquier script `.sh` referenciado en la misma carpeta):
+## 🛠️ Agregar una nueva imagen
+
+1. Crea la carpeta en `profiles/<id>/profile.yml`:
    ```yaml
-   id: mi-nuevo-entorno
-   label: "Node.js + Python + Herramientas"
+   id: mi-imagen
+   label: "Mi Entorno Personalizado"
    modules:
      - github-cli
      - nodejs
      - pnpm
      - python
-   scripts:
-     - file: custom-setup.sh
-       when: start
    ```
-
-3. Haz `git commit` y `git push`. El pipeline detectará la nueva imagen en una matriz paralela y la publicará automáticamente en GHCR.
-
----
-
-## 🛠️ Ejecución manual (Workflow Dispatch)
-
-Puedes disparar el workflow manualmente desde la pestaña **Actions**:
-- Filtrar para compilar únicamente un perfil en particular (ej. `ai-browser`).
-- Seleccionar una versión específica de `devcontainer-cli` si no se desea usar `latest`.
-
----
-
-## 🚢 Usar las imágenes publicadas
-
-Una vez publicada en GitHub Packages:
-
-```bash
-docker pull ghcr.io/<tu-usuario>/<id-perfil>:latest
-```
-
-O directamente referenciarla en tus configuraciones de `devcontainer-cli` o `devcontainer.json`.
+2. Haz `git push`. GitHub Actions la compilará para `amd64`/`arm64` y la publicará automáticamente en:
+   ```bash
+   ghcr.io/joacohbc/mi-imagen:latest
+   ```
