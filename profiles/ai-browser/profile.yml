@@ -5,5 +5,7 @@ modules:
   - python
   - chrome
 scripts:
+  - file: install-browser-harness.sh
+    when: build
   - file: setup-browser-harness-mcp.sh
     when: start
