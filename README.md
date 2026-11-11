@@ -6,17 +6,42 @@ Imágenes de devcontainers personalizadas precompiladas para usar directamente c
 
 ## ⚡ Uso rápido con `devcontainer-cli`
 
-Para iniciar un devcontainer usando directamente una de estas imágenes sin compilar localmente:
+### 1. Registrar y descargar la imagen (`image create` & `image pull`)
+
+Para registrar una definición de imagen remota y verificar su compatibilidad en el daemon local:
 
 ```bash
-# Iniciar contenedor con la imagen precompilada
-devcontainer-cli up --image ghcr.io/joacohbc/ai-browser:latest
+# Registrar la definición de imagen remota
+devcontainer-cli image create agy-remote --remote ghcr.io/joacohbc/agy-remote:latest
+
+# Descargar la imagen y verificar el contrato de compatibilidad
+devcontainer-cli image pull agy-remote
 ```
 
-O para inicializar la configuración en tu proyecto actual:
+*(También se puede registrar `ai-browser` apuntando a `ghcr.io/joacohbc/ai-browser:latest`).*
+
+### 2. Iniciar un contenedor desechable (`run --image`)
+
+Para iniciar un entorno temporal sin generar archivos de proyecto:
 
 ```bash
-devcontainer-cli init --image ghcr.io/joacohbc/ai-browser:latest
+# Iniciar contenedor temporal con la imagen definida
+devcontainer-cli run --image agy-remote
+
+# Para agentes autónomos de IA
+devcontainer-cli agent run --image agy-remote
+```
+
+### 3. Usar en un proyecto de trabajo (`workspace init`)
+
+Para utilizar la imagen dentro de un directorio de proyecto existente:
+
+```bash
+# Inicializar el proyecto en modo imagen
+devcontainer-cli workspace init --mode image --image agy-remote
+
+# Iniciar el entorno de desarrollo
+devcontainer-cli workspace up
 ```
 
 ---
@@ -32,7 +57,7 @@ devcontainer-cli init --image ghcr.io/joacohbc/ai-browser:latest
 
 ## 🛠️ Agregar una nueva imagen
 
-1. Crea la carpeta en `profiles/<id>/profile.yml`:
+1. Cree la carpeta en `profiles/<id>/profile.yml`:
    ```yaml
    id: mi-imagen
    label: "Mi Entorno Personalizado"
@@ -42,7 +67,7 @@ devcontainer-cli init --image ghcr.io/joacohbc/ai-browser:latest
      - pnpm
      - python
    ```
-2. Haz `git push`. GitHub Actions la compilará para `amd64`/`arm64` y la publicará automáticamente en:
+2. Ejecute `git push`. GitHub Actions la compilará para `amd64`/`arm64` y la publicará automáticamente en:
    ```bash
    ghcr.io/joacohbc/mi-imagen:latest
    ```
