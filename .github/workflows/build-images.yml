@@ -18,7 +18,7 @@ on:
         required: false
         default: "all"
       cli_version:
-        description: "devcontainer-cli version to download (e.g. latest, v1.18.1)"
+        description: "devcontainer-cli version to download (e.g. latest, v1.19.2)"
         required: false
         default: "latest"
 
@@ -104,9 +104,9 @@ jobs:
           REPO="Joacohbc/my-devcontainer-installer"
           
           if [ "$CLI_REQ_VER" = "latest" ]; then
-            TAG=$(curl -sSL "https://api.github.com/repos/${REPO}/releases/latest" | jq -r '.tag_name')
+            TAG=$(curl -sSL -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" "https://api.github.com/repos/${REPO}/releases/latest" | jq -r '.tag_name')
             if [ "$TAG" = "null" ] || [ -z "$TAG" ]; then
-              TAG="v1.18.1"
+              TAG="v1.19.2"
             fi
           else
             TAG="$CLI_REQ_VER"
@@ -147,9 +147,7 @@ jobs:
           ./devcontainer-cli --no-interactive --force \
             --workspace "${PROFILE_NAME}" \
             --mode custom \
-            --profile "${PROFILE_NAME}" \
-            --image "${{ env.TAG_LATEST }}" \
-            --no-build
+            --profile "${PROFILE_NAME}"
 
           if [ ! -f ".dc_${PROFILE_NAME}/build/Dockerfile" ]; then
             echo "Error: Dockerfile was not generated in .dc_${PROFILE_NAME}/build/Dockerfile"

@@ -1,0 +1,15 @@
+id: agy-remote
+label: Antigravity CLI Remote Session
+modules:
+  - github-cli
+  - python
+  - sqlite
+  - nodejs
+  - pnpm
+  - antigravity-cli
+  - cloudflared
+scripts:
+  - file: setup-remote-name.sh
+    when: manual
+  - file: agy-remote.sh
+    when: service

@@ -26,6 +26,7 @@ devcontainer-cli init --image ghcr.io/joacohbc/ai-browser:latest
 | Imagen | Contenido |
 |---|---|
 | `ghcr.io/joacohbc/ai-browser:latest` | Python, uv, Node.js, pnpm, Chromium headless, GitHub CLI y Browser Harness con MCP preconfigurado (.claude, .agent, .cursor). |
+| `ghcr.io/joacohbc/agy-remote:latest` | Python, SQLite, Node.js, pnpm, GitHub CLI, Antigravity CLI y Cloudflared para sesiones remotas de servicio (`agy remote-control serve`). |
 
 ---
 
