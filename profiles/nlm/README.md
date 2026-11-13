@@ -63,9 +63,37 @@ El servidor MCP opera en modo headless y reutiliza las credenciales almacenadas 
    devcontainer-cli agent exec -- notebooklm auth check --test
    ```
 
-### Opción B — Inicializar desde el asistente interactivo con `--oauth-token`
+### Opción B — Obtener `oauth_token` desde el navegador (sin instalar nada en el host)
 
-Si tienes un `oauth_token` de un solo uso, puedes ingresarlo directamente al ejecutar el asistente `~/post-script/custom-setup-nlm.sh` dentro del contenedor.
+Si no quieres instalar `notebooklm-py` ni Playwright en tu máquina local, puedes capturar el `oauth_token` de un solo uso directamente desde tu navegador:
+
+1. Abre en tu navegador: `https://accounts.google.com/EmbeddedSetup`
+2. Inicia sesión con la cuenta de Google que usas en NotebookLM.
+3. Haz clic en **"I agree"** cuando te lo pida *(es normal que la página quede cargando indefinidamente; puedes ignorarlo)*.
+4. Abre las DevTools del navegador (`F12`) → **Application** (o **Storage** en Firefox) → **Cookies** → `https://accounts.google.com` y copia el valor de la cookie **`oauth_token`**.
+5. Carga el token dentro del contenedor de una de estas dos formas:
+   - **Directo por CLI:**
+     ```bash
+     devcontainer-cli agent exec -- notebooklm --profile default login \
+       --master-token \
+       --account tu-cuenta@gmail.com \
+       --oauth-token "<OAUTH_TOKEN>"
+     ```
+   - **Desde el asistente interactivo:** ejecutando `~/post-script/custom-setup-nlm.sh` dentro del contenedor e ingresando tu email y el `oauth_token` cuando te lo solicite.
+6. Verifica que la sesión quedó activa:
+   ```bash
+   devcontainer-cli agent exec -- notebooklm --profile default auth check --test
+   ```
+
+> **¿Por qué `EmbeddedSetup` y cómo revocar el acceso?**
+> - El `oauth_token` de `EmbeddedSetup` es **de un solo uso**: se intercambia una única vez por un `master_token` (`aas_et/`) guardado en `~/.notebooklm/profiles/default/master_token.json`, que permite renovar las cookies de NotebookLM (`storage_state.json`) en modo headless sin volver a abrir un navegador.
+> - **Para revocar el acceso más adelante:**
+>   1. En **Cuenta de Google → Seguridad → Tus dispositivos** (`https://myaccount.google.com/security`), busca la sesión **"Android device"** asociada y cierra la sesión / quita el acceso *(cambiar la contraseña de Google también invalida los master tokens existentes)*.
+>   2. Limpia las credenciales guardadas en el contenedor:
+>      ```bash
+>      devcontainer-cli agent exec -- notebooklm --profile default auth logout
+>      devcontainer-cli agent exec -- rm -f ~/.notebooklm/profiles/default/master_token.json ~/.notebooklm/profiles/default/storage_state.json
+>      ```
 
 ---
 
