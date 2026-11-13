@@ -1,64 +1,60 @@
 # devcli-images
 
-Imágenes de devcontainers personalizadas precompiladas para usar directamente con `devcontainer-cli`.
+Catálogo de imágenes de devcontainers personalizadas y precompiladas (`linux/amd64` y `linux/arm64`), publicadas en GitHub Container Registry (GHCR) y listas para usar directamente con [`devcontainer-cli`](https://github.com/Joacohbc/my-devcontainer-installer).
 
----
-
-## ⚡ Uso rápido con `devcontainer-cli`
-
-### 1. Registrar y descargar la imagen (`image create` & `image pull`)
-
-Para registrar una definición de imagen remota y verificar su compatibilidad en el daemon local:
-
-```bash
-# Registrar la definición de imagen remota
-devcontainer-cli image create agy-remote --remote ghcr.io/joacohbc/agy-remote:latest
-
-# Descargar la imagen y verificar el contrato de compatibilidad
-devcontainer-cli image pull agy-remote
-```
-
-*(También se puede registrar `ai-browser` apuntando a `ghcr.io/joacohbc/ai-browser:latest`).*
-
-### 2. Iniciar un contenedor desechable (`run --image`)
-
-Para iniciar un entorno temporal sin generar archivos de proyecto:
-
-```bash
-# Iniciar contenedor temporal con la imagen definida
-devcontainer-cli run --image agy-remote
-
-# Para agentes autónomos de IA
-devcontainer-cli agent run --image agy-remote
-```
-
-### 3. Usar en un proyecto de trabajo (`workspace init`)
-
-Para utilizar la imagen dentro de un directorio de proyecto existente:
-
-```bash
-# Inicializar el proyecto en modo imagen
-devcontainer-cli workspace init --mode image --image agy-remote
-
-# Iniciar el entorno de desarrollo
-devcontainer-cli workspace up
-```
+Cada perfil en `profiles/<id>/` define sus módulos, scripts de ciclo de vida (`build`, `start`, `service`, `manual`) y se compila automáticamente mediante GitHub Actions.
 
 ---
 
 ## 📦 Imágenes disponibles
 
-| Imagen | Contenido | Guía de uso |
-|---|---|---|
-| `ghcr.io/joacohbc/ai-browser:latest` | Python, uv, Node.js, pnpm, Chromium headless, GitHub CLI y Browser Harness con MCP preconfigurado (.claude, .agent, .cursor). | [Ver guía](profiles/ai-browser/README.md) |
-| `ghcr.io/joacohbc/agy-remote:latest` | Python, SQLite, Node.js, pnpm, GitHub CLI, Antigravity CLI y Cloudflared para sesiones remotas de servicio (`agy remote-control serve`). | [Ver guía](profiles/agy-remote/README.md) |
-| `ghcr.io/joacohbc/nlm:latest` | Python, uv, Node.js, pnpm, GitHub CLI, Cloudflared y servidor MCP remoto de NotebookLM (`notebooklm-py[mcp,headless,markdown]`) en HTTP (`:9420`). | [Ver guía](profiles/nlm/README.md) |
+| Perfil | Imagen GHCR | Descripción | Guía |
+|---|---|---|---|
+| **`ai-browser`** | `ghcr.io/joacohbc/ai-browser:latest` | Python (`uv`), Node.js, pnpm, Chromium headless, GitHub CLI y **Browser Harness MCP** preconfigurado (`.claude`, `.agent`, `.cursor`). | [Ver guía](profiles/ai-browser/README.md) |
+| **`agy-remote`** | `ghcr.io/joacohbc/agy-remote:latest` | Python (`uv`), SQLite, Node.js, pnpm, GitHub CLI, **Antigravity CLI** y Cloudflared para sesiones remotas (`agy remote-control serve`). | [Ver guía](profiles/agy-remote/README.md) |
+| **`nlm`** | `ghcr.io/joacohbc/nlm:latest` | Python (`uv`), Node.js, pnpm, GitHub CLI, Cloudflared y servidor **NotebookLM MCP** remoto (`notebooklm-py[mcp,headless,markdown]`) en HTTP (`:9420`). | [Ver guía](profiles/nlm/README.md) |
+
+---
+
+## ⚡ Uso rápido con `devcontainer-cli`
+
+Reemplaza `<id>` por cualquiera de los perfiles de la tabla anterior (`ai-browser`, `agy-remote` o `nlm`):
+
+### 1. Registrar y descargar la imagen (`image create` & `image pull`)
+
+```bash
+# Registrar la definición de imagen remota
+devcontainer-cli image create <id> --remote ghcr.io/joacohbc/<id>:latest
+
+# Descargar la imagen y verificar el contrato de compatibilidad
+devcontainer-cli image pull <id>
+```
+
+### 2. Iniciar un contenedor desechable (`run --image`)
+
+```bash
+# Iniciar contenedor temporal interactivo
+devcontainer-cli run --image <id>
+
+# Para agentes autónomos de IA
+devcontainer-cli agent run --image <id>
+```
+
+### 3. Usar en un proyecto de trabajo (`workspace init`)
+
+```bash
+# Inicializar el proyecto actual en modo imagen
+devcontainer-cli workspace init --mode image --image <id>
+
+# Levantar el entorno de desarrollo
+devcontainer-cli workspace up
+```
 
 ---
 
 ## 🛠️ Agregar una nueva imagen
 
-1. Cree la carpeta en `profiles/<id>/profile.yml`:
+1. Crea la carpeta `profiles/<id>/profile.yml` (junto con sus scripts `.sh` y su `README.md`):
    ```yaml
    id: mi-imagen
    label: "Mi Entorno Personalizado"
@@ -68,7 +64,7 @@ devcontainer-cli workspace up
      - pnpm
      - python
    ```
-2. Ejecute `git push`. GitHub Actions la compilará para `amd64`/`arm64` y la publicará automáticamente en:
+2. Ejecuta `git push`. GitHub Actions la compilará para `amd64`/`arm64` y la publicará automáticamente en:
    ```bash
    ghcr.io/joacohbc/mi-imagen:latest
    ```
