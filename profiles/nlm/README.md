@@ -120,49 +120,6 @@ Al finalizar, `custom-setup-nlm.sh` reinicia automáticamente tanto `notebooklm-
 
 ---
 
-## 🔌 3. Conectar clientes MCP
-
-### Conectar desde Claude Code / Claude Desktop (vía Cloudflare Tunnel)
-
-```bash
-claude mcp add --transport http notebooklm \
-  https://nlm.tudominio.com/mcp \
-  --header "Authorization: Bearer <TU_NOTEBOOKLM_MCP_TOKEN>"
-```
-
-### Conectar en local sin Cloudflare Tunnel (vía Port Forwarding de `devcontainer-cli`)
-
-Si no deseas exponer un túnel público, puedes reenviar el puerto `9420` desde el contenedor hacia tu máquina local:
-
-```bash
-devcontainer-cli agent forward 9420
-```
-
-Y registrar el servidor apuntando a `127.0.0.1`:
-
-```bash
-claude mcp add --transport http notebooklm \
-  http://127.0.0.1:9420/mcp \
-  --header "Authorization: Bearer <TU_NOTEBOOKLM_MCP_TOKEN>"
-```
-
-Para consultar el `NOTEBOOKLM_MCP_TOKEN` generado automáticamente en cualquier momento:
-
-```bash
-devcontainer-cli agent exec -- grep '^NOTEBOOKLM_MCP_TOKEN=' ~/.notebooklm/mcp.env
-```
-
-### Conectar desde `claude.ai` (Web / Mobile) o ChatGPT
-
-1. Ejecuta `~/post-script/custom-setup-nlm.sh` y habilita **OAuth auto-alojado** indicando tu URL base pública (sin `/mcp`, por ejemplo `https://nlm.tudominio.com`).
-2. En **claude.ai → Settings / Customize → Connectors → Add custom connector**, ingresa la URL con `/mcp`:
-   ```text
-   https://nlm.tudominio.com/mcp
-   ```
-3. Cuando solicite autenticación, ingresa la contraseña `NOTEBOOKLM_MCP_OAUTH_PASSWORD` mostrada por el asistente.
-
----
-
 ## 🔍 Diagnóstico y logs
 
 ```bash
