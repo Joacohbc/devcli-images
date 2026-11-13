@@ -8,7 +8,7 @@ Entorno precompilado que ejecuta el servidor MCP remoto de **[notebooklm-py](htt
 
 ---
 
-## 🚀 Inicio rápido
+## Inicio rápido
 
 ### 1. Registrar y descargar la imagen
 
@@ -38,7 +38,7 @@ devcontainer-cli workspace up
 
 ---
 
-## 🔐 1. Autenticación con Google (NotebookLM)
+## 1. Autenticación con Google (NotebookLM)
 
 El servidor MCP opera en modo headless y reutiliza las credenciales almacenadas en `~/.notebooklm/profiles/default/`. Se recomienda utilizar una **cuenta de Google dedicada** y autenticación mediante **Master Token** (que renueva las cookies automáticamente sin necesidad de abrir un navegador).
 
@@ -97,7 +97,7 @@ Si no quieres instalar `notebooklm-py` ni Playwright en tu máquina local, puede
 
 ---
 
-## ⚙️ 2. Configurar el servidor MCP y Cloudflare Tunnel
+## 2. Configurar el servidor MCP y Cloudflare Tunnel
 
 Al iniciar el contenedor por primera vez, el servicio `nlm-mcp.sh`:
 1. Crea `~/.notebooklm/mcp.env` (permisos `0600`) con un `NOTEBOOKLM_MCP_TOKEN` aleatorio de 32 bytes si aún no existe.
@@ -120,7 +120,7 @@ Al finalizar, `custom-setup-nlm.sh` reinicia automáticamente tanto `notebooklm-
 
 ---
 
-## 🔍 Diagnóstico y logs
+## Diagnóstico y logs
 
 ```bash
 # Ver logs del servidor MCP HTTP
