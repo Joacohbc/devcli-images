@@ -7,7 +7,7 @@ Entorno precompilado diseñado para ejecutar sesiones remotas persistentes de **
 
 ---
 
-## 🚀 Inicio rápido
+## Inicio rápido
 
 ### 1. Registrar y descargar la imagen
 
@@ -37,7 +37,7 @@ devcontainer-cli workspace up
 
 ---
 
-## ⚙️ Configuración y puesta en marcha
+## Configuración y puesta en marcha
 
 ### 1. Configurar el nombre del host para Remote Control
 
@@ -79,7 +79,7 @@ devcontainer-cli workspace restart
 
 ---
 
-## 🔍 Diagnóstico y logs
+## Diagnóstico y logs
 
 Para consultar la salida del servicio `agy remote-control serve`:
 

@@ -8,7 +8,7 @@ Entorno de desarrollo precompilado con **Chromium headless** y **[Browser Harnes
 
 ---
 
-## 🚀 Inicio rápido
+## Inicio rápido
 
 ### 1. Registrar y descargar la imagen
 
@@ -38,7 +38,7 @@ devcontainer-cli workspace up
 
 ---
 
-## ⚙️ ¿Qué configura automáticamente al iniciar?
+## ¿Qué configura automáticamente al iniciar?
 
 Al arrancar el contenedor por primera vez, el script de inicio (`setup-browser-harness-mcp.sh`) verifica la instalación de `browser-harness`, desactiva la telemetría y genera automáticamente los archivos de configuración MCP en el directorio del workspace:
 
@@ -52,7 +52,7 @@ De esta manera, cualquier agente que se ejecute dentro del proyecto detecta y ut
 
 ---
 
-## 🛠️ Uso dentro del contenedor
+## Uso dentro del contenedor
 
 ### Uso desde CLI
 
@@ -83,7 +83,7 @@ browser = p.chromium.launch(
 
 ---
 
-## 🔍 Diagnóstico
+## Diagnóstico
 
 Si necesitas verificar el log del script de configuración inicial:
 

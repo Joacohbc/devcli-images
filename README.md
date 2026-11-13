@@ -6,7 +6,7 @@ Cada perfil en `profiles/<id>/` define sus módulos, scripts de ciclo de vida (`
 
 ---
 
-## 📦 Imágenes disponibles
+## Imágenes disponibles
 
 | Perfil | Imagen GHCR | Descripción | Guía |
 |---|---|---|---|
@@ -16,7 +16,7 @@ Cada perfil en `profiles/<id>/` define sus módulos, scripts de ciclo de vida (`
 
 ---
 
-## ⚡ Uso rápido con `devcontainer-cli`
+## Uso rápido con `devcontainer-cli`
 
 Reemplaza `<id>` por cualquiera de los perfiles de la tabla anterior (`ai-browser`, `agy-remote` o `nlm`):
 
@@ -52,7 +52,7 @@ devcontainer-cli workspace up
 
 ---
 
-## 🛠️ Agregar una nueva imagen
+## Agregar una nueva imagen
 
 1. Crea la carpeta `profiles/<id>/profile.yml` (junto con sus scripts `.sh` y su `README.md`):
    ```yaml
