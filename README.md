@@ -48,11 +48,11 @@ devcontainer-cli workspace up
 
 ## 📦 Imágenes disponibles
 
-| Imagen | Contenido |
-|---|---|
-| `ghcr.io/joacohbc/ai-browser:latest` | Python, uv, Node.js, pnpm, Chromium headless, GitHub CLI y Browser Harness con MCP preconfigurado (.claude, .agent, .cursor). |
-| `ghcr.io/joacohbc/agy-remote:latest` | Python, SQLite, Node.js, pnpm, GitHub CLI, Antigravity CLI y Cloudflared para sesiones remotas de servicio (`agy remote-control serve`). |
-| `ghcr.io/joacohbc/nlm:latest` | Python, uv, Node.js, pnpm, GitHub CLI, Cloudflared y servidor MCP remoto de NotebookLM (`notebooklm-py[mcp,headless,markdown]`) en HTTP (`:9420`). |
+| Imagen | Contenido | Guía de uso |
+|---|---|---|
+| `ghcr.io/joacohbc/ai-browser:latest` | Python, uv, Node.js, pnpm, Chromium headless, GitHub CLI y Browser Harness con MCP preconfigurado (.claude, .agent, .cursor). | [Ver guía](profiles/ai-browser/README.md) |
+| `ghcr.io/joacohbc/agy-remote:latest` | Python, SQLite, Node.js, pnpm, GitHub CLI, Antigravity CLI y Cloudflared para sesiones remotas de servicio (`agy remote-control serve`). | [Ver guía](profiles/agy-remote/README.md) |
+| `ghcr.io/joacohbc/nlm:latest` | Python, uv, Node.js, pnpm, GitHub CLI, Cloudflared y servidor MCP remoto de NotebookLM (`notebooklm-py[mcp,headless,markdown]`) en HTTP (`:9420`). | [Ver guía](profiles/nlm/README.md) |
 
 ---
 
