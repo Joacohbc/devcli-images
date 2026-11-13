@@ -1,0 +1,15 @@
+id: nlm
+label: "NotebookLM MCP Remote Server"
+modules:
+  - github-cli
+  - python
+  - nodejs
+  - pnpm
+  - cloudflared
+scripts:
+  - file: install-nlm.sh
+    when: build
+  - file: setup-nlm.sh
+    when: manual
+  - file: nlm-mcp.sh
+    when: service

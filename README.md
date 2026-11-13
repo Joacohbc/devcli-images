@@ -52,6 +52,7 @@ devcontainer-cli workspace up
 |---|---|
 | `ghcr.io/joacohbc/ai-browser:latest` | Python, uv, Node.js, pnpm, Chromium headless, GitHub CLI y Browser Harness con MCP preconfigurado (.claude, .agent, .cursor). |
 | `ghcr.io/joacohbc/agy-remote:latest` | Python, SQLite, Node.js, pnpm, GitHub CLI, Antigravity CLI y Cloudflared para sesiones remotas de servicio (`agy remote-control serve`). |
+| `ghcr.io/joacohbc/nlm:latest` | Python, uv, Node.js, pnpm, GitHub CLI, Cloudflared y servidor MCP remoto de NotebookLM (`notebooklm-py[mcp,headless,markdown]`) en HTTP (`:9420`). |
 
 ---
 
